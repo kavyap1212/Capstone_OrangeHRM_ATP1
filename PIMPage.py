@@ -41,28 +41,28 @@ class PIMPage:
             WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable(self.add_button)).click()
             print("Clicked Add button.")
             time.sleep(2)  # Added delay
-            
+
             first_name_field = WebDriverWait(self.driver, 20).until(EC.visibility_of_element_located(self.first_name_field))
             first_name_field.send_keys(first_name)
             print("Entered first name.")
             time.sleep(2)  # Added delay
-            
+
             last_name_field = WebDriverWait(self.driver, 20).until(EC.visibility_of_element_located(self.last_name_field))
             last_name_field.send_keys(last_name)
             print("Entered last name.")
             time.sleep(2)  # Added delay
-            
+
             WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable(self.save_button)).click()
             print("Clicked save button on first page.")
             time.sleep(2)  # Added delay
-            
+
             # Click save button on the next page
             second_save_button = WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable(self.second_save_button))
             self.driver.execute_script("arguments[0].scrollIntoView(true);", second_save_button)
             second_save_button.click()
             print("Clicked save button on second page.")
             time.sleep(2)  # Added delay
-            
+
             print("New employee added successfully.")
         except Exception as e:
             print(f"Error adding new employee: {e}")
@@ -74,41 +74,45 @@ class PIMPage:
             employee_list.send_keys(Keys.RETURN)
             print("Entered employee name for search.")
             time.sleep(2)  # Added delay
-            
+
             WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable(self.search_button)).click()
             print("Clicked search button.")
             time.sleep(2)  # Added delay
-            
-            self.scroll_to_element(self.edit_button_img)
+
+            edit_button = self.scroll_to_element(self.edit_button_img)
+            if not edit_button:
+                print(f"No employee record found for: {employee_name}")
+                return
+
             WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable(self.edit_button_img)).click()
             print("Clicked edit button.")
             time.sleep(2)  # Added delay
-            
+
             first_name_field = WebDriverWait(self.driver, 20).until(EC.visibility_of_element_located(self.first_name_field))
             first_name_field.clear()
-            time.sleep(2)  # Added delay
+            time.sleep(1)  # Added delay
             first_name_field.send_keys(new_first_name)
             print("Entered new first name.")
             time.sleep(2)  # Added delay
-            
+
             last_name_field = WebDriverWait(self.driver, 20).until(EC.visibility_of_element_located(self.last_name_field))
             last_name_field.clear()
-            time.sleep(2)  # Added delay
+            time.sleep(1)  # Added delay
             last_name_field.send_keys(new_last_name)
             print("Entered new last name.")
             time.sleep(2)  # Added delay
-            
+
             WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable(self.save_button)).click()
             print("Clicked save button on first page.")
             time.sleep(2)  # Added delay
-            
+
             # Click save button on the next page
             second_save_button = WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable(self.second_save_button))
             self.driver.execute_script("arguments[0].scrollIntoView(true);", second_save_button)
             second_save_button.click()
             print("Clicked save button on second page.")
             time.sleep(2)  # Added delay
-            
+
             print("Employee details edited successfully.")
         except Exception as e:
             print(f"Error editing employee: {e}")
@@ -120,20 +124,24 @@ class PIMPage:
             employee_list.send_keys(Keys.RETURN)
             print("Entered employee name for search.")
             time.sleep(2)  # Added delay
-            
+
             WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable(self.search_button)).click()
             print("Clicked search button.")
             time.sleep(2)  # Added delay
-            
-            self.scroll_to_element(self.delete_button_img)
+
+            delete_button = self.scroll_to_element(self.delete_button_img)
+            if not delete_button:
+                print(f"No employee record found for: {employee_name}")
+                return
+
             WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable(self.delete_button_img)).click()
             print("Clicked delete button.")
             time.sleep(2)  # Added delay
-            
+
             WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable(self.confirm_delete_button)).click()
             print("Clicked confirm delete button.")
             time.sleep(2)  # Added delay
-            
+
             print("Employee deleted successfully.")
         except Exception as e:
             print(f"Error deleting employee: {e}")
